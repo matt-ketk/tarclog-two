@@ -1,0 +1,34 @@
+Date:	06/24/18
+
+Flight No.	1
+	Weather:
+		Temperature (F):	0.0
+		Wind Speed (MPH):	0.0
+		Humidity (%):		0.0
+	Specifications:
+		Payload Name:		
+		Booster Name:		
+		Motor Name:			
+		Parachute Name:		
+		Motor Delay (s):	0
+	Mass Components:
+		Payload (g):		0.0
+		Booster (g):		0.0
+		Eggs (g):			
+		Parachute (g):		0.0
+		Nomex (g):			0.0
+		Insulation (g):		0.0
+		Ballast (g):		0.0
+		Casing (g):			0.0
+		Motor (g):			0.0
+		Total (g):			0
+	Flight Results:
+		Time (s):			0.00
+		Altitude (ft):		0
+		Flight Score:		1028
+	Observations:
+		Modifications:
+		Damages:
+		Characteristics:
+		Considerations:
+
