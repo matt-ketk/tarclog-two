@@ -1,8 +1,9 @@
 class Config:
     # modify them if you know what you're doing
-    _DATASHEETS_DIR = "cache/datasheets/"
-    _SAVES_DIR = "cache/saves/"
+    _DATASHEETS_DIR = "../cache/datasheets/"
+    _SAVES_DIR = "../cache/saves/"
     _DATE_FORMAT = "%m/%d/%y"
+    _DATE_FORMAT_FILE = "%m.%d.%y_%H.%M.%S"
 
     _ERROR_0 = "Incorrect input. Please try again."
     _ERROR_1 = "Incorrect keyword. Please try again."

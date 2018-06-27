@@ -29,6 +29,9 @@ class DataSheet:
         else:
             raise IndexError(Config._EXCEPTION_0)
 
+    def date(self):
+        return self.__dateCreated
+
     def tab(self, field):
         length = len(field + Config._DATASHEET_FORMAT[field]) + 1
         tabs = ""
@@ -38,8 +41,8 @@ class DataSheet:
 
     def printSheet(self, fileName):
         with open(fileName, 'w') as sheet:
-            sheet.write("Date:\t" + self.__dateCreated.strftime("%m/%d/%y")
-            + "\n\n");
+            sheet.write("Date:\t"
+            + self.__dateCreated.strftime(Config._DATE_FORMAT) + "\n\n");
 
             for i in range(0, len(self.__flights)):
                 flight = self.__flights[i]
@@ -103,5 +106,5 @@ class DataSheet:
 """
 testsheet = DataSheet()
 testsheet.add(Flight())
-testsheet.printSheet("test.txt")
+testsheet.printSheet(Config._DATASHEETS_DIR + "test.txt")
 """

@@ -5,25 +5,25 @@ class Flight:
 
     def __init__(self):
         self.__flightData = {
-            "Temperature" : 0,
-            "Wind Speed" : 0,
-            "Humidity" : 0,
+            "Temperature" : 0.0,
+            "Wind Speed" : 0.0,
+            "Humidity" : 0.0,
             "Payload Name" : "",
             "Booster Name" : "",
             "Motor Name" : "",
             "Parachute Name" : "",
-            "Motor Delay" : 0,
-            "Payload" : 0,
-            "Booster" : 0,
+            "Motor Delay" : 0.0,
+            "Payload" : 0.0,
+            "Booster" : 0.0,
             "Eggs" : [],
-            "Parachute" : 0,
-            "Nomex" : 0,
-            "Insulation" : 0,
-            "Ballast" : 0,
-            "Casing" : 0,
-            "Motor" : 0,
-            "Time" : 0,
-            "Altitude" : 0,
+            "Parachute" : 0.0,
+            "Nomex" : 0.0,
+            "Insulation" : 0.0,
+            "Ballast" : 0.0,
+            "Casing" : 0.0,
+            "Motor" : 0.0,
+            "Time" : 0.0,
+            "Altitude" : 0.0,
             "Modifications" : [],
             "Damages" : [],
             "Characteristics" : [],
@@ -48,7 +48,7 @@ class Flight:
             raise ValueError(Config._EXCEPTION_0)
 
     def score(self):
-        score = 0
+        score = 0.0
         time = self.__flightData["Time"]
         altitude = self.__flightData["Altitude"]
         if time < Config._MIN_TIME:
@@ -58,7 +58,7 @@ class Flight:
         return (score + abs(altitude - Config._ALTITUDE))
 
     def totalMass(self):
-        total = 0
+        total = 0.0
         for mass in Config._MASS_COMPONENTS:
             if mass == "Eggs":
                 for eggMass in self.__flightData[mass]:
@@ -103,7 +103,7 @@ class Flight:
 
     def isComplete(self):
         for i in Config._WEATHER:
-            if self.__flightData[i] <= 0:
+            if self.__flightData[i] <= 0.0:
                  return False
         for i in Config._SPECIFICATIONS:
             if self.flightData[i].strip() == "":
@@ -114,12 +114,12 @@ class Flight:
                     return False
                 else:
                     for j in self.__flightData[i]:
-                        if j <= 0:
+                        if j <= 0.0:
                             return False
-            elif self.flightData[i] <= 0:
+            elif self.flightData[i] <= 0.0:
                 return False
         for i in Config._RESULTS:
-            if self.__flightData[i] <= 0:
+            if self.__flightData[i] <= 0.0:
                 return False
         for i in Config._OBSERVATIONS:
             if len(self.__flightData[i]) < 1:
