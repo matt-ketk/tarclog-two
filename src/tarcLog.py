@@ -51,11 +51,140 @@ def main():
                     except OSError:
                         print("Did not find file. Exiting...")
             elif num == 1:
-                pass
+                fileList = os.listdir(Config._SAVES_DIR)
+                if len(fileList) > 0:
+                    loadedSaves = []
+                    numOfFlights = 0
+                    hasChosen = False
+                    print("Type a number from 0 to the largest listed number to edit a flight: ")
+                    print("NOTE: enter /exit, /e to return to main menu.\n")
+                    # DRY this later...
+                    for fileName in fileList:
+                        with open(Config._SAVES_DIR + fileName, 'rb') as save:
+                            loadedSaves.append(pickle.load(save))
+                    for save in loadedSaves:
+                        print(save.date().strftime(Config._DATE_FORMAT) + ":")
+                        for n in range(0, save.size()):
+                            msg = "\t" + str(numOfFlights) + ": "
+                            if save.get(n).isComplete():
+                                msg += "COMPLETE"
+                            else:
+                                msg += "INCOMPLETE"
+                            print(msg)
+                            numOfFlights += 1
+                        print()
+                    while not hasChosen:
+                        userInput = input()
+                        if userInput.lower() == "/end" or userInput.lower() == "/e":
+                            hasChosen = True
+                            print("Returning to main menu...\n")
+                        elif evalInput(userInput) == 1:
+                            num = int(userInput)
+                            if num in range(0, numOfFlights):
+                                sheetIndex = 0
+                                while num >= loadedSaves[sheetIndex].size():
+                                    num -= loadedSaves[sheetIndex].size()
+                                    sheetIndex += 1
+                                editFlight(
+                                    loadedSaves[sheetIndex],
+                                    Config._SAVES_DIR + fileList[sheetIndex],
+                                    loadedSaves[sheetIndex].size() - (1 + num),
+                                    True
+                                )
+                                while not hasChosen:
+                                    # DRY this later...
+                                    userInput = input("Do you want to add another flight? (yes, y/no, n): ")
+
+                                    if userInput.lower() == "yes" or userInput.lower() == "y":
+                                        loadedSaves[sheetIndex].add(Flight())
+                                        editFlight(
+                                            loadedSaves[sheetIndex],
+                                            Config._SAVES_DIR + fileList[sheetIndex],
+                                            loadedSaves[sheetIndex].size() - 1,
+                                            False
+                                        )
+                                    elif userInput.lower() == "no" or userInput.lower() == "n":
+                                        hasChosen = True
+                                        print("Returning to main menu...")
+                                    else:
+                                        print(Config._ERROR_0)
+                            else:
+                                print(Config._ERROR_0)
+                        else:
+                            print(Config._ERROR_0)
+                else:
+                    print("No saves found. Returning to main menu...\n")
             elif num == 2:
-                pass
+                loadedSaves = []
+                numOfSaves = 0
+                hasChosen = False
+                print("Type a number from 0 to the largest listed number to print a sheet: ")
+                print("NOTE: enter /exit, /e to return to main menu.\n")
+                for fileName in fileList:
+                    with open(Config._SAVES_DIR + fileName, 'rb') as save:
+                        loadedSaves.append(pickle.load(save))
+                for save in loadedSaves:
+                    msg = str(numOfSaves) + "- " + save.date().strftime(Config._DATE_FORMAT) + ": "
+                    isComplete = True
+                    for n in range(0, save.size()):
+                        isComplete = (isComplete and save.get(n).isComplete())
+                    if isComplete:
+                        msg += "COMPLETE"
+                    else:
+                        msg += "INCOMPLETE"
+                    print(msg)
+                    numOfSaves += 1
+                while not hasChosen:
+                    userInput = input()
+                    if userInput.lower() == "/exit" or userInput.lower() == "/e":
+                        hasChosen = True
+                        print("Returning to main menu...\n")
+                    elif evalInput(userInput) == 1:
+                        num = int(userInput)
+                        if num in range(0, len(loadedSaves)):
+                            hasChosen = True
+                            print("Printing...\n")
+                            loadedSaves[num].printSheet("sheet_" +
+                            loadedSaves[i].date().strftime(Config._DATE_FORMAT));
+                        else:
+                            print(Config._ERROR_0)
+                    else:
+                        print(Config._ERROR_0)
             elif num == 3:
-                pass
+                loadedSaves = []
+                numOfSaves = 0
+                hasChosen = False
+                print("Type a number from 0 to the largest listed number to delete a sheet: ")
+                print("NOTE: enter /exit, /e to return to main menu.\n")
+                for fileName in fileList:
+                    with open(Config._SAVES_DIR + fileName, 'rb') as save:
+                        loadedSaves.append(pickle.load(save))
+                for save in loadedSaves:
+                    msg = str(numOfSaves) + "- " + save.date().strftime(Config._DATE_FORMAT) + ": "
+                    isComplete = True
+                    for n in range(0, save.size()):
+                        isComplete = (isComplete and save.get(n).isComplete())
+                    if isComplete:
+                        msg += "COMPLETE"
+                    else:
+                        msg += "INCOMPLETE"
+                    print(msg)
+                    numOfSaves += 1
+                while not hasChosen:
+                    userInput = input()
+                    if userInput.lower() == "/exit" or userInput.lower() == "/e":
+                        hasChosen = True
+                        print("Returning to main menu...\n")
+                    elif evalInput(userInput) == 1:
+                        num = int(userInput)
+                        if num in range(0, len(fileList)):
+                            hasChosen = True
+                            print("Deleting...\n")
+                            os.remove(Config._SAVES_DIR + fileList[num])
+                        else:
+                            print(Config._ERROR_0)
+                    else:
+                        print(Config._ERROR_0)
             elif num == 4:
                 pass
             elif num == 5:
@@ -153,7 +282,7 @@ def editFlight(sheet, saveName, flightNum, showField):
                         phase += 1
                     else:
                         print(Config._ERROR_1)
-                elif evalKeyword(userInput) == 1: 
+                elif evalKeyword(userInput) == 1:
                     if phase > 0:
                         phase -= 1
                     else:
